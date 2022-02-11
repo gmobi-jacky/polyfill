@@ -1,23 +1,8 @@
 const express = require('express');
-const polyfillLibrary = require('polyfill-library');
 
 const app = express();
 
-app.get('/', (req, res) => {
-    polyfillLibrary.getPolyfillString({
-        uaString: req.get('user-agent'),
-        minify: false,
-        features: {
-            'es6': { flags: ['gated'] }
-        }
-    }).then(function (bundleString) {
-        res.send(`
-        UA: ${req.get('user-agent')} <br>
-        <pre>${bundleString}<pre>
-        `)
-    });
-}
-);
+app.get('/', require('./api/index'));
 
 const port = process.env.PORT || 80;
 
